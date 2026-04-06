@@ -1,86 +1,85 @@
-"# API de Gerenciamento de Usuários em TypeScript
+"# API-Alons-TS
 
 ## Descrição
 
-Esta é uma API RESTful simples para gerenciamento de usuários, desenvolvida em TypeScript com Express.js. A API permite criar, listar, atualizar e deletar usuários, utilizando um banco de dados simulado em memória.
+Esta é uma API REST simples desenvolvida em TypeScript utilizando o framework Express.js. A API permite realizar operações CRUD (Criar, Ler, Atualizar e Deletar) em usuários. Os dados são armazenados temporariamente em memória, simulando um banco de dados, o que significa que os dados são perdidos quando o servidor é reiniciado.
+
+A API foi criada como um projeto de aprendizado para demonstrar conceitos básicos de desenvolvimento de APIs com TypeScript, incluindo roteamento, controladores, serviços e validação básica de dados.
 
 ## Funcionalidades
 
-- Criar novos usuários
-- Listar todos os usuários
-- Atualizar informações de usuários existentes
-- Deletar usuários
-- Validação básica de entrada (nome e email obrigatórios)
+- **Criar usuário**: Adicionar um novo usuário com nome e email.
+- **Listar usuários**: Obter uma lista de todos os usuários cadastrados.
+- **Atualizar usuário**: Modificar os dados de um usuário existente (nome e/ou email).
+- **Deletar usuário**: Remover um usuário pelo ID.
 
 ## Tecnologias Utilizadas
 
-- **Node.js**: Ambiente de execução JavaScript
-- **TypeScript**: Superset do JavaScript com tipagem estática
-- **Express.js**: Framework web para Node.js
-- **Banco de Dados Simulado**: Array em memória para armazenamento temporário
-
-## Pré-requisitos
-
-- Node.js (versão 14 ou superior)
-- npm ou yarn
-
-## Instalação
-
-1. Clone o repositório:
-   ```bash
-   git clone <url-do-repositorio>
-   cd API-Alons-TS
-   ```
-
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
-
-3. Compile o TypeScript (opcional, pois o ts-node-dev faz isso automaticamente):
-   ```bash
-   npx tsc
-   ```
-
-## Como Executar
-
-Para executar a API em modo de desenvolvimento:
-```bash
-npx ts-node-dev src/server.ts
-```
-
-A API estará disponível em `http://localhost:3000`.
+- **Node.js**: Ambiente de execução JavaScript.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Express.js**: Framework web para Node.js, usado para criar o servidor e as rotas da API.
+- **ts-node-dev**: Ferramenta para desenvolvimento com TypeScript, permitindo recarregamento automático durante o desenvolvimento.
 
 ## Estrutura do Projeto
 
 ```
 src/
+├── server.ts              # Arquivo principal do servidor
 ├── controller/
-│   └── userControler.ts    # Controladores das rotas
+│   └── userControler.ts   # Controladores para as operações de usuário
 ├── database/
-│   └── db.ts               # Simulação do banco de dados
+│   └── db.ts              # Simulação de banco de dados em memória
 ├── routes/
-│   └── userRoutes.ts       # Definição das rotas
-├── services/
-│   └── userService.ts      # Lógica de negócio
-└── server.ts               # Arquivo principal do servidor
+│   └── userRoutes.ts      # Definição das rotas da API
+└── services/
+    └── userService.ts     # Lógica de negócio para usuários
+```
+
+## Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js instalado (versão 14 ou superior).
+- npm ou yarn para gerenciamento de pacotes.
+
+### Passos para Instalação
+
+1. Clone o repositório ou baixe os arquivos do projeto.
+
+2. Navegue até o diretório do projeto:
+   ```
+   cd API-Alons-TS
+   ```
+
+3. Instale as dependências:
+   ```
+   npm install
+   ```
+
+### Executando o Projeto
+
+Para executar o servidor em modo de desenvolvimento (com recarregamento automático):
+```
+npm run dev
+```
+
+O servidor será iniciado na porta 3000. Você verá a mensagem:
+```
+Servidor rodando em http://localhost:3000
 ```
 
 ## Endpoints da API
 
-### Base URL
-```
-http://localhost:3000
-```
+A API possui os seguintes endpoints, todos relacionados a usuários:
 
 ### 1. Criar Usuário
 - **Método**: POST
-- **Endpoint**: `/`
-- **Corpo da Requisição**:
+- **URL**: `/`
+- **Corpo da Requisição** (JSON):
   ```json
   {
-    "name": "João Silva",
-    "email": "joao@example.com"
+    "name": "Nome do Usuário",
+    "email": "email@exemplo.com"
   }
   ```
 - **Resposta de Sucesso** (201):
@@ -89,8 +88,8 @@ http://localhost:3000
     "message": "Usuário criado com sucesso",
     "user": {
       "id": 1,
-      "name": "João Silva",
-      "email": "joao@example.com"
+      "name": "Nome do Usuário",
+      "email": "email@exemplo.com"
     }
   }
   ```
@@ -103,15 +102,15 @@ http://localhost:3000
 
 ### 2. Listar Usuários
 - **Método**: GET
-- **Endpoint**: `/`
+- **URL**: `/`
 - **Resposta de Sucesso** (200):
   ```json
   {
     "users": [
       {
         "id": 1,
-        "name": "João Silva",
-        "email": "joao@example.com"
+        "name": "Nome do Usuário",
+        "email": "email@exemplo.com"
       }
     ]
   }
@@ -119,13 +118,12 @@ http://localhost:3000
 
 ### 3. Atualizar Usuário
 - **Método**: PUT
-- **Endpoint**: `/:id`
-- **Parâmetros de URL**: `id` (número do ID do usuário)
-- **Corpo da Requisição** (campos opcionais):
+- **URL**: `/:id` (onde `:id` é o ID do usuário)
+- **Corpo da Requisição** (JSON, campos opcionais):
   ```json
   {
-    "name": "João Silva Atualizado",
-    "email": "joao.atualizado@example.com"
+    "name": "Novo Nome",
+    "email": "novoemail@exemplo.com"
   }
   ```
 - **Resposta de Sucesso** (200):
@@ -134,8 +132,8 @@ http://localhost:3000
     "message": "Usuário atualizado com sucesso",
     "user": {
       "id": 1,
-      "name": "João Silva Atualizado",
-      "email": "joao.atualizado@example.com"
+      "name": "Novo Nome",
+      "email": "novoemail@exemplo.com"
     }
   }
   ```
@@ -148,17 +146,11 @@ http://localhost:3000
 
 ### 4. Deletar Usuário
 - **Método**: DELETE
-- **Endpoint**: `/:id`
-- **Parâmetros de URL**: `id` (número do ID do usuário)
+- **URL**: `/:id` (onde `:id` é o ID do usuário)
 - **Resposta de Sucesso** (200):
   ```json
   {
-    "message": "Usuário deletado com sucesso",
-    "user": {
-      "id": 1,
-      "name": "João Silva",
-      "email": "joao@example.com"
-    }
+    "message": "Usuário deletado com sucesso"
   }
   ```
 - **Resposta de Erro** (404):
@@ -168,51 +160,41 @@ http://localhost:3000
   }
   ```
 
-## Exemplos de Uso
+## Validações
 
-### Criar um usuário
-```bash
+- **Criação de usuário**: Os campos `name` e `email` são obrigatórios.
+- **Atualização e deleção**: O ID do usuário deve existir no sistema.
+
+## Limitações
+
+- Os dados são armazenados apenas em memória, o que significa que são perdidos ao reiniciar o servidor.
+- Não há autenticação ou autorização implementada.
+- Não há validação avançada de email ou outros campos.
+- IDs são gerados automaticamente e sequencialmente.
+
+## Como Testar a API
+
+Você pode testar a API usando ferramentas como Postman, Insomnia ou curl.
+
+Exemplo com curl para criar um usuário:
+```
 curl -X POST http://localhost:3000/ \
   -H "Content-Type: application/json" \
-  -d '{"name": "Maria Santos", "email": "maria@example.com"}'
+  -d '{"name": "João Silva", "email": "joao@exemplo.com"}'
 ```
 
-### Listar usuários
-```bash
+Exemplo para listar usuários:
+```
 curl http://localhost:3000/
 ```
 
-### Atualizar um usuário
-```bash
-curl -X PUT http://localhost:3000/1 \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Maria Santos Silva"}'
-```
-
-### Deletar um usuário
-```bash
-curl -X DELETE http://localhost:3000/1
-```
-
-## Scripts Disponíveis
-
-- `npm run dev`: Executa a aplicação em modo de desenvolvimento com ts-node-dev
-- `npm test`: Executa os testes (atualmente não implementado)
-
-## Considerações
-
-- O banco de dados é simulado em memória, ou seja, os dados são perdidos ao reiniciar o servidor.
-- Não há autenticação implementada.
-- Validação básica de entrada está presente, mas pode ser expandida.
-- Para produção, considere usar um banco de dados real como PostgreSQL ou MongoDB.
-
 ## Contribuição
 
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+Este é um projeto de aprendizado. Sinta-se à vontade para fazer fork e contribuir com melhorias, como:
+- Adicionar um banco de dados real (ex: MongoDB, PostgreSQL).
+- Implementar validações mais robustas.
+- Adicionar autenticação JWT.
+- Criar testes unitários e de integração.
 
 ## Licença
 
